@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUV 图片查看器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>YUV 图片查看器</h1>
+        </header>
+
+        <div class="main-content">
+            <aside class="control-panel">
+                <div class="section">
+                    <h3>📁 文件选择</h3>
+                    <input type="file" id="fileInput" accept=".yuv,.raw,.y" class="file-input">
+                    <div class="file-info" id="fileInfo">未选择文件</div>
+                </div>
+
+                <div class="section">
+                    <h3>⚙️ YUV 参数设置</h3>
+                    
+                    <div class="form-group">
+                        <label>宽度:</label>
+                        <input type="number" id="width" value="1920" min="1" max="8192">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>高度:</label>
+                        <input type="number" id="height" value="1080" min="1" max="8192">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>YUV 格式:</label>
+                        <select id="yuvFormat">
+                            <option value="I420" selected>YUV420P (I420)</option>
+                            <option value="YV12">YV12</option>
+                            <option value="NV12">NV12</option>
+                            <option value="NV21">NV21</option>
+                            <option value="I422">YUV422P (I422)</option>
+                            <option value="YV16">YV16</option>
+                            <option value="UYVY">UYVY</option>
+                            <option value="YUY2">YUY2</option>
+                            <option value="I444">YUV444P (I444)</option>
+                            <option value="RGB">RGB</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>位深:</label>
+                        <select id="bitDepth">
+                            <option value="8" selected>8-bit</option>
+                            <option value="10">10-bit</option>
+                            <option value="12">12-bit</option>
+                            <option value="16">16-bit</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>📊 文件信息</h3>
+                    <div class="info-grid">
+                        <div class="info-label">文件大小:</div>
+                        <div id="fileSize">-</div>
+                        <div class="info-label">预期大小:</div>
+                        <div id="expectedSize">-</div>
+                        <div class="info-label">帧数量:</div>
+                        <div id="frameCount">-</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>🔍 帧控制</h3>
+                    <div class="form-group">
+                        <label>当前帧:</label>
+                        <input type="number" id="currentFrame" value="0" min="0">
+                    </div>
+                    <div class="button-group">
+                        <button id="prevBtn" class="btn">上一帧</button>
+                        <button id="nextBtn" class="btn">下一帧</button>
+                    </div>
+                </div>
+
+                <button id="renderBtn" class="btn primary fullwidth">🖼️ 渲染图像</button>
+            </aside>
+
+            <main class="display-area">
+                <div class="canvas-container">
+                    <canvas id="yuvCanvas"></canvas>
+                    <div class="placeholder" id="placeholder">
+                        <div class="placeholder-icon">🖼️</div>
+                        <div>请选择YUV文件并设置参数后点击渲染</div>
+                    </div>
+                </div>
+                
+                <div class="status-bar" id="statusBar">
+                    就绪
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="yuv-decoder.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
