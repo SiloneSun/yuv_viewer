@@ -93,6 +93,19 @@
                     </div>
                 </div>
 
+                <div class="section">
+                    <h3>🔄 视图控制</h3>
+                    <div class="button-group">
+                        <button id="rotateLeftBtn" class="btn">↺ 左旋90°</button>
+                        <button id="rotateRightBtn" class="btn">↻ 右旋90°</button>
+                    </div>
+                    <div class="button-group">
+                        <button id="zoomInBtn" class="btn">➕ 放大</button>
+                        <button id="zoomOutBtn" class="btn">➖ 缩小</button>
+                        <button id="resetBtn" class="btn">⭮ 重置</button>
+                    </div>
+                </div>
+
                 <button id="renderBtn" class="btn primary fullwidth">🖼️ 渲染图像</button>
             </aside>
 
@@ -112,6 +125,12 @@
         </div>
     </div>
 
+    <style>
+        #yuvCanvas {
+            transition: transform 0.2s ease;
+            transform-origin: center center;
+        }
+    </style>
     <script src="yuv-decoder.js"></script>
     <script src="app.js"></script>
 </body>
