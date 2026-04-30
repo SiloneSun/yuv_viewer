@@ -34,18 +34,27 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>YUV 格式:</label>
+                        <label>格式:</label>
                         <select id="yuvFormat">
-                            <option value="I420" selected>YUV420P (I420)</option>
-                            <option value="YV12">YV12</option>
-                            <option value="NV12">NV12</option>
-                            <option value="NV21">NV21</option>
-                            <option value="I422">YUV422P (I422)</option>
-                            <option value="YV16">YV16</option>
-                            <option value="UYVY">UYVY</option>
-                            <option value="YUY2">YUY2</option>
-                            <option value="I444">YUV444P (I444)</option>
-                            <option value="RGB">RGB</option>
+                            <optgroup label="YUV 格式">
+                                <option value="I420" selected>YUV420P (I420)</option>
+                                <option value="YV12">YV12</option>
+                                <option value="NV12">NV12</option>
+                                <option value="NV21">NV21</option>
+                                <option value="I422">YUV422P (I422)</option>
+                                <option value="YV16">YV16</option>
+                                <option value="UYVY">UYVY</option>
+                                <option value="YUY2">YUY2</option>
+                                <option value="I444">YUV444P (I444)</option>
+                            </optgroup>
+                            <optgroup label="RGB 格式">
+                                <option value="RGB565">RGB565</option>
+                                <option value="RGB888">RGB888</option>
+                                <option value="BGR888">BGR888</option>
+                                <option value="ARGB8888">ARGB8888</option>
+                                <option value="ABGR8888">ABGR8888</option>
+                                <option value="RGB">RGB (兼容)</option>
+                            </optgroup>
                         </select>
                     </div>
 

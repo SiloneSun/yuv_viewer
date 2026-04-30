@@ -50,11 +50,16 @@ class YUVDecoder {
             case 'YV16':
             case 'UYVY':
             case 'YUY2':
+            case 'RGB565':
                 return width * height * 2 * multiplier;
             case 'I444':
-                return width * height * 3 * multiplier;
+            case 'RGB888':
+            case 'BGR888':
             case 'RGB':
-                return width * height * 3;
+                return width * height * 3 * multiplier;
+            case 'ARGB8888':
+            case 'ABGR8888':
+                return width * height * 4;
             default:
                 return Math.floor(width * height * 1.5) * multiplier;
         }
@@ -78,7 +83,12 @@ class YUVDecoder {
             case 'UYVY': this.decodeUYVY(buffer, width, height, imageData); break;
             case 'YUY2': this.decodeYUY2(buffer, width, height, imageData); break;
             case 'I444': this.decodeI444(buffer, width, height, imageData); break;
-            case 'RGB':  this.decodeRGB(buffer, width, height, imageData); break;
+            case 'RGB':
+            case 'RGB888': this.decodeRGB(buffer, width, height, imageData); break;
+            case 'BGR888': this.decodeBGR888(buffer, width, height, imageData); break;
+            case 'RGB565': this.decodeRGB565(buffer, width, height, imageData); break;
+            case 'ARGB8888': this.decodeARGB8888(buffer, width, height, imageData); break;
+            case 'ABGR8888': this.decodeABGR8888(buffer, width, height, imageData); break;
             default: this.decodeI420(buffer, width, height, imageData);
         }
 
@@ -319,6 +329,63 @@ class YUVDecoder {
             imageData[outIdx + 1] = buffer[inIdx + 1];
             imageData[outIdx + 2] = buffer[inIdx + 2];
             imageData[outIdx + 3] = 255;
+        }
+    }
+
+    decodeBGR888(buffer, width, height, imageData) {
+        for (let i = 0; i < width * height; i++) {
+            const inIdx = i * 3;
+            const outIdx = i * 4;
+            
+            imageData[outIdx] = buffer[inIdx + 2];
+            imageData[outIdx + 1] = buffer[inIdx + 1];
+            imageData[outIdx + 2] = buffer[inIdx];
+            imageData[outIdx + 3] = 255;
+        }
+    }
+
+    decodeRGB565(buffer, width, height, imageData) {
+        for (let i = 0; i < width * height; i++) {
+            const inIdx = i * 2;
+            const outIdx = i * 4;
+            
+            const value = (buffer[inIdx + 1] << 8) | buffer[inIdx];
+            let r = (value >> 11) & 0x1F;
+            let g = (value >> 5) & 0x3F;
+            let b = value & 0x1F;
+            
+            r = (r << 3) | (r >> 2);
+            g = (g << 2) | (g >> 4);
+            b = (b << 3) | (b >> 2);
+            
+            imageData[outIdx] = r;
+            imageData[outIdx + 1] = g;
+            imageData[outIdx + 2] = b;
+            imageData[outIdx + 3] = 255;
+        }
+    }
+
+    decodeARGB8888(buffer, width, height, imageData) {
+        for (let i = 0; i < width * height; i++) {
+            const inIdx = i * 4;
+            const outIdx = i * 4;
+            
+            imageData[outIdx] = buffer[inIdx + 1];
+            imageData[outIdx + 1] = buffer[inIdx + 2];
+            imageData[outIdx + 2] = buffer[inIdx + 3];
+            imageData[outIdx + 3] = buffer[inIdx];
+        }
+    }
+
+    decodeABGR8888(buffer, width, height, imageData) {
+        for (let i = 0; i < width * height; i++) {
+            const inIdx = i * 4;
+            const outIdx = i * 4;
+            
+            imageData[outIdx] = buffer[inIdx + 3];
+            imageData[outIdx + 1] = buffer[inIdx + 2];
+            imageData[outIdx + 2] = buffer[inIdx + 1];
+            imageData[outIdx + 3] = buffer[inIdx];
         }
     }
 }
